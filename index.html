@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="root"></div>
+</body>
+<!-- React 라이브러리 불러오기 -->
+<script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+<script>
+    const root = document.getElementById("root");
+    const span = React.createElement("span", 
+    {id:"sexy-span", style: {color: "red"}}, 
+    "Hello I'm a span"
+    );
+    ReactDOM.render(span, root);
+</script>
+</html>
+
