@@ -9,10 +9,16 @@
 <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
 <script>
     const root = document.getElementById("root");
-    const h3= React.createElement("h3",{
-        onMouseEnter: () =>  console.log("on mouse"),
-    }, 
-    "Hello I'm a span");
+
+
+    const Title = <h3 id = "title" onMouseEnter={() => console.log("mouse enter")}> ></h3>
+
+
+
+    // const h3= React.createElement("h3",{
+    //     onMouseEnter: () =>  console.log("on mouse"),
+    // }, 
+    // "Hello I'm a span");
     const btn = React.createElement("button",
     {
         onClick: () => console.log("I'm clicked"),   //button.addEventListener("click",function이름)과 같은 기능을함
