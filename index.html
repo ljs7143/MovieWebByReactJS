@@ -10,22 +10,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
 
 <script type="text/babel">
-    const root = document.getElementById("root");
 // jsx에서 arrow function을 사용하는 경우 
 // 1. 이벤트 핸들러로 사용할 때
 // 2. 다른 컴포넌트에 props로 전달할 때
 // 3. 조건부 렌더링에서 사용할 때
 //JSX에서 중요한건 컴포넌트의 첫글자는  대문자여야함
     function App(){
-        const [counter, setCounter] = React.useState(0);
-        const onCLick = () => {
-            setCounter(counter+1);
+        const [minutes, setMinutes] = React.useState(0);
+        const onChange = (event) => {
+            setMinutes(event.target.value);
         };
+        //모든 값을 0으로 돌려줌
+        const reset = () => setMinutes(0);
         return( 
+        
         <div>
-            <h3>Total Clicks: {counter}</h3>        
-            <button onClick={onCLick}>Click me </button>
+            <div>
+                
+            <h1 className="hi">Super Converter</h1>        
+            <label htmlFor="minutes">Minutes</label>
+            <input 
+            value={minutes}
+            id="minutes"
+            placeholder = "Minutes" 
+            type="number"
+            onChange={onChange}
+            />
+            </div>
+        
+        
+        <div>
+            <label htmlFor="hours">Hours</label>
+            <input 
+                value = {Math.round(minutes/60)}
+                id ="hours" 
+                placeholder = "Hours" type="number"
+            />
         </div>
+        <button on Click={reset}>Reset</button>
+    </div>
         );
     } 
     ReactDOM.render(<App/>, root);
