@@ -15,26 +15,37 @@
 // 2. 다른 컴포넌트에 props로 전달할 때
 // 3. 조건부 렌더링에서 사용할 때
 //JSX에서 중요한건 컴포넌트의 첫글자는  대문자여야함
-    function App(){
-        const [minutes, setMinutes] = React.useState(0);
+    function MinutesToHours(){
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
         const onChange = (event) => {
-            setMinutes(event.target.value);
+            setAmount(event.target.value);  //modifier
         };
-        //모든 값을 0으로 돌려줌
-        const reset = () => setMinutes(0);
+        //모든 값을 0으로 돌려주
+        const reset = () => setAmount(0);
+
+        //현재의 상태에서 반대의 것을 설정해주는 함수
+        //현재 true면 false, false면 true 반환
+        const onFlip = () => {
+            reset();
+            setFlipped((current) => !current);
+        
+        };
         return( 
         
         <div>
             <div>
-                
-            <h1 className="hi">Super Converter</h1>        
+               
             <label htmlFor="minutes">Minutes</label>
             <input 
-            value={minutes}
+            value={flipped ? amount*60 : amount}   //밑의 JSX와 같은 원리. 순서만 바뀜 
+
             id="minutes"
             placeholder = "Minutes" 
             type="number"
             onChange={onChange}
+            disabled={flipped}          //Minutes와 Hours를 서로 반대되는 boolean 값으로 해주어야함. 그래야 하나는 입력가능, 하나는 disabled가 되니깐 
+
             />
             </div>
         
@@ -42,15 +53,97 @@
         <div>
             <label htmlFor="hours">Hours</label>
             <input 
-                value = {Math.round(minutes/60)}
+        
+                value = {flipped ? amount : Math.round(amount/60)}  //-----> true일 경우 amount로 표시. false일 경우 뒤의 공식대로
                 id ="hours" 
-                placeholder = "Hours" type="number"
+                placeholder = "Hours" 
+                type="number"
+               
+                onChange={onChange}
+                disabled = {!flipped}  //ex) flipped가 false면 위의 onFlip으로 인해 여기는 true가 되어야함 
             />
         </div>
-        <button on Click={reset}>Reset</button>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>Flip</button>
     </div>
         );
     } 
+
+    function KmToMiles(){
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+        const onChange = (event) => {
+            setAmount(event.target.value);  //modifier
+        };
+        const reset = () => setAmount(0);
+
+        const onFlip = () => {
+            reset();
+            setFlipped((current) => !current);
+        
+        };
+        return( 
+        
+        <div>
+            <div>
+               
+            <label htmlFor="km">Km</label>
+            <input 
+            value={flipped ? amount*0.6213 : amount}   //밑의 JSX와 같은 원리. 순서만 바뀜 
+
+            id="km"
+            placeholder = "Km" 
+            type="number"
+            onChange={onChange}
+            disabled={flipped}          //Minutes와 Hours를 서로 반대되는 boolean 값으로 해주어야함. 그래야 하나는 입력가능, 하나는 disabled가 되니깐 
+
+            />
+            </div>
+        
+        
+        <div>
+            <label htmlFor="miles">Miles</label>
+            <input 
+        
+                value = {flipped ? amount : amount/0.6213}  //-----> true일 경우 amount로 표시. false일 경우 뒤의 공식대로
+                id ="km" 
+                placeholder = "Km" 
+                type="number"
+               
+                onChange={onChange}
+                disabled = {!flipped}  //ex) flipped가 false면 위의 onFlip으로 인해 여기는 true가 되어야함 
+            />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>Flip</button>
+    </div>
+        );
+    }
+    function App(){
+        const [index, setIndex] = React.useState(0);  //이게 default state임 
+        const onSelect =(event) => {
+            setIndex(event.target.value);
+        };
+
+         return(         
+            <div> 
+                <h1>Super Converter</h1>
+                <select value ={index} onChange={onSelect}>
+                    //여기서 설정된 숫자로 사용자가 볼 수 있는 옵션을 제공해줌
+                    //무엇을 렌더링할지 
+
+                    <option value="0"> Minutes & Hours </option>
+                    <option value="1"> Km & Miles </option>
+                </select>
+            
+                {index === "0" ? <MinutesToHours/> : null}   
+                {index === "1" ? <KmToMiles/> : null}   
+ 
+
+            </div>
+        );
+     } 
+    const root = document.getElementById("root");
     ReactDOM.render(<App/>, root);
 </script>
 </html>
